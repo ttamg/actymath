@@ -1,0 +1,25 @@
+[tool.poetry]
+name = "actymath"
+version = "0.1.0"
+description = "Actuarial Math and commutation functions for life insurance product - with a Pandas backend"
+authors = ["Matt Gosden <mdgosden@gmail.com>"]
+license= "MIT"
+homepage = "https://github.com/ttamg/actymath"
+repository = "https://github.com/ttamg/actymath"
+
+[tool.poetry.dependencies]
+python = ">=3.8 <4.0"
+pandas = "^1.1.5"
+parse = "^1.19.0"
+
+[tool.poetry.dev-dependencies]
+pytest = "^5.2"
+jupyter = "^1.0.0"
+pylint = "^2.8.2"
+black = "^21.4b2"
+nb-black = "^1.0.7"
+pytest-randomly = "^3.7.0"
+
+[build-system]
+requires = ["poetry-core>=1.0.0"]
+build-backend = "poetry.core.masonry.api"
