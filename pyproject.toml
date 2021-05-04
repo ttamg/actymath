@@ -6,6 +6,7 @@ authors = ["Matt Gosden <mdgosden@gmail.com>"]
 license= "MIT"
 homepage = "https://github.com/ttamg/actymath"
 repository = "https://github.com/ttamg/actymath"
+exclude=["notebooks"]
 
 [tool.poetry.dependencies]
 python = ">=3.8 <4.0"
