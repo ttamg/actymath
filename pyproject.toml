@@ -1,12 +1,14 @@
 [tool.poetry]
 name = "actymath"
-version = "0.1.0"
+version = "0.1.1"
 description = "Actuarial Math and commutation functions for life insurance product - with a Pandas backend"
 authors = ["Matt Gosden <mdgosden@gmail.com>"]
 license= "MIT"
+readme='README.md'
 homepage = "https://github.com/ttamg/actymath"
 repository = "https://github.com/ttamg/actymath"
 exclude=["notebooks"]
+keywords=["actuarial", "pandas", "insurance"]
 
 [tool.poetry.dependencies]
 python = ">=3.8 <4.0"
