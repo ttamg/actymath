@@ -24,7 +24,7 @@ Install using pip
 
 ### Getting started
 
-This [getting started notebook](notebooks/01_getting_started.ipynb) illustrates how to use the package with a simple example.
+This [getting started notebook](https://github.com/ttamg/actymath/blob/main/notebooks/01_getting_started.ipynb) illustrates how to use the package with a simple example.
 
 ### Actuarial formula
 
