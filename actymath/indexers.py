@@ -13,7 +13,7 @@ class SliceToEndIndexer(BaseIndexer):
     dataframe['column'].rolling(indexer).sum()
     """
 
-    def get_window_bounds(self, num_values, min_periods, center, closed):
+    def get_window_bounds(self, num_values, min_periods, center, closed, step):
         start = np.arange(num_values, dtype=np.int64)
         end = np.full(num_values, num_values, dtype=np.int64)
         return start, end
