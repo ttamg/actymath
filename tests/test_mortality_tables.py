@@ -1,12 +1,10 @@
+import pandas as pd
 import pytest
-from actymath.tables import (
-    MortalityTableError,
-    TestTable,
-    TestTable2,
-    AMC00,
-    A1967_70_Exams,
-    A1967_70,
-)
+
+from actymath.tables import (A1967_70, AMC00, A1967_70_Exams,
+                             CSVMortalityTable, MortalityTableError,
+                             OneDimensionTableMixIn, PandasMortalityTable,
+                             TestTable, TestTable2)
 
 
 def test_qx_read_correctly():
@@ -51,3 +49,29 @@ def test_A1967_70_diagonal_read_correctly():
     q30 = table.qx(30, select=False)
     assert q30[0] == pytest.approx(0.00065368, abs=0.00000001)  # Ultimate mortality
     assert q30[4] == pytest.approx(0.00079004, abs=0.00000001)  # Ultimate mortality
+
+def test_pandas_custom_table_creation():
+    FILE = "actymath/table_data/test.csv"
+    df = pd.read_csv(FILE)
+
+    class NewTestTable(OneDimensionTableMixIn, PandasMortalityTable):
+
+        age_column = "Age x"
+        table_type = "qx"
+        value_columns = ["q x"]
+
+    table = NewTestTable(df)
+    assert table.qx(30)[0] == 0.000531
+
+def test_csv_custom_table_creation():
+
+    class NewTestTable(OneDimensionTableMixIn, CSVMortalityTable):
+
+        age_column = "Age x"
+        table_type = "qx"
+        value_columns = ["q x"]
+
+    table = NewTestTable(path="actymath/table_data", filename="test.csv")
+    assert table.qx(30)[0] == 0.000531
+
+

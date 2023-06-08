@@ -2,7 +2,7 @@ import pandas as pd
 from actymath.indexers import SliceNIndexer
 
 from .base import Column
-from actymath import ActyMathError
+from actymath.exceptions import ActyMathError
 
 """ Defining time periods. """
 

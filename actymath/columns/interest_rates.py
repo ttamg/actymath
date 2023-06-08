@@ -1,5 +1,5 @@
 from .base import Column
-from actymath import ActyMathError
+from actymath.exceptions import ActyMathError
 
 
 class i(Column):

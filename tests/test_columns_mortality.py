@@ -1,5 +1,7 @@
 import pytest
-from actymath import Calc, ActyMathError
+
+from actymath import Calc
+from actymath.exceptions import ActyMathError
 from actymath.tables import A1967_70_Exams
 
 # A1967-70 table - Actuarial Green tables for testing

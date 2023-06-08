@@ -2,6 +2,8 @@ import csv
 import os
 from abc import ABC, abstractmethod
 
+from actymath.exceptions import MortalityTableError
+
 DATA_PATH = os.path.dirname(__file__) + "/table_data"
 
 
@@ -13,8 +15,7 @@ def convert_lx_to_qx(lx_list: list):
     return q_values
 
 
-class MortalityTableError(Exception):
-    pass
+
 
 
 class MortalityTable(ABC):
@@ -135,12 +136,15 @@ class CSVMortalityTable(MortalityTable):
     Two dimensional tables are loaded into multiple columns.
     Specify table data type as 'qx' or 'lx'.
     Constructor will build lx, dx and qx data when it loads.
+
+    Set age_column to the name of the column where age sits.
+    Set value_columns to the name of the value columns in the order to be read.
     """
 
-    path = DATA_PATH
-    filename = None
+    path = None  # Path of the CSV file
+    filename = None  # Name of the CSV file
     age_column = ""  # The name of the column where age sits
-    table_type = "qx"  # data is either 'qx' or 'lx'
+    table_type = None  # data is either 'qx' or 'lx'
     value_columns = []  # The name of the value columns in the order to be read
 
     def __init__(self, filename=None, path=None):
@@ -149,6 +153,18 @@ class CSVMortalityTable(MortalityTable):
             self.path = path
         if filename is not None:
             self.filename = filename
+
+        if self.path is None or self.filename is None:
+            raise MortalityTableError("Path and filename must be specified")
+        
+        if not self.age_column:
+            raise MortalityTableError("Age column name must be specified")
+
+        if not self.value_columns:
+            raise MortalityTableError("Value column names must be specified")
+        
+        if self.table_type not in ["qx", "lx"]:
+            raise MortalityTableError("Table type must be 'qx' or 'lx'")
 
         with open(f"{self.path}/{self.filename}") as f:
             reader = csv.DictReader(f)
@@ -160,10 +176,50 @@ class CSVMortalityTable(MortalityTable):
 
         self.ultimate_col = len(self.value_columns) - 1  # Index for last column
 
+class PandasMortalityTable(MortalityTable):
+    """
+    Creates a mortality table from a pandas dataframe.
+    Two dimensional tables are to be across multiple columns.
+    Specify table data type as 'qx' or 'lx'.
+    Constructor will build lx, dx and qx data when it loads.
+
+    Set age_column to the name of the column where age sits.
+    Set value_columns to the name of the value columns in the order to be read.
+    """
+
+    df = None # The pandas dataframe containing mortality data
+    age_column = ""  # The name of the column where age sits
+    table_type = None  # data is either 'qx' or 'lx'
+    value_columns = []  # The name of the value columns in the order to be read
+
+
+    def __init__(self, df=None):
+        super().__init__()
+        if df is not None:
+            self.df = df
+        
+        if not self.age_column:
+            raise MortalityTableError("Age column name must be specified")
+
+        if not self.value_columns:
+            raise MortalityTableError("Value column names must be specified")
+        
+        if self.table_type not in ["qx", "lx"]:
+            raise MortalityTableError("Table type must be 'qx' or 'lx'")
+
+        self.data = df[self.value_columns].values.tolist()
+
+        self.age_index = {age: i for i, age in df[self.age_column].to_dict().items()}
+
+        self.ultimate_col = len(self.value_columns) - 1  # Index for last column
+
+
+"""Example tables"""
 
 class TestTable(OneDimensionTableMixIn, CSVMortalityTable):
     """ A test mortality table. """
 
+    path = DATA_PATH
     filename = "test.csv"
     age_column = "Age x"
     table_type = "qx"
@@ -173,6 +229,7 @@ class TestTable(OneDimensionTableMixIn, CSVMortalityTable):
 class TestTable2(OneDimensionTableMixIn, CSVMortalityTable):
     """ A test mortality table using lx. """
 
+    path = DATA_PATH
     filename = "test_lx.csv"
     age_column = "Age x"
     table_type = "lx"
@@ -184,6 +241,7 @@ class AMC00(TwoDimensionDiagonalTableMixIn, CSVMortalityTable):
     https://www.actuaries.org.uk/learn-and-develop/continuous-mortality-investigation/cmi-mortality-and-morbidity-tables/00-series-tables
     """
 
+    path = DATA_PATH
     filename = "amc00.csv"
     age_column = "Age x"
     table_type = "qx"
@@ -195,6 +253,7 @@ class A1967_70_Exams(TwoDimensionHorizontalTableMixIn, CSVMortalityTable):
     https://www.actuaries.org.uk/learn-and-develop/continuous-mortality-investigation/cmi-mortality-and-morbidity-tables/mortality-rates-older-mortality-tables
     """
 
+    path = DATA_PATH
     filename = "a1967-70_exam.csv"
     age_column = "x"
     table_type = "lx"
@@ -206,6 +265,7 @@ class A1967_70(TwoDimensionDiagonalTableMixIn, CSVMortalityTable):
     https://www.actuaries.org.uk/learn-and-develop/continuous-mortality-investigation/cmi-mortality-and-morbidity-tables/mortality-rates-older-mortality-tables
     """
 
+    path = DATA_PATH
     filename = "a1967-70.csv"
     age_column = "Age x"
     table_type = "qx"

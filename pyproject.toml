@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "actymath"
-version = "0.1.2"
+version = "0.1.3"
 description = "Actuarial Math and commutation functions for life insurance product - with a Pandas backend"
 authors = ["Matt Gosden <mdgosden@gmail.com>"]
 license = "MIT"
@@ -23,6 +23,7 @@ black = "^23.3.0"
 pytest-randomly = "^3.12.0"
 jupyter = "^1.0.0"
 ipykernel = "^6.22.0"
+toml = "^0.10.2"
 
 [build-system]
 requires = ["poetry-core>=1.0.0"]

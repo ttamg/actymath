@@ -1,7 +1,7 @@
 import pandas as pd
 
 from .base import Column
-from actymath import ActyMathError
+from actymath.exceptions import ActyMathError
 from actymath.indexers import SliceToEndIndexer
 
 

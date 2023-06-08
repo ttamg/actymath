@@ -2,6 +2,7 @@ import pandas as pd
 
 from .base import Column
 from actymath.indexers import SliceToEndIndexer
+from actymath.exceptions import ActyMathError
 
 """ Commutation functions. """
 

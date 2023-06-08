@@ -1,7 +1,8 @@
 import pandas as pd
 
-from .base import Column
+from actymath.exceptions import ActyMathError
 
+from .base import Column
 
 """ Actuarial formulae for whole remainder of life. """
 

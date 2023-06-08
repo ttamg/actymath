@@ -2,7 +2,7 @@ from abc import ABC, abstractclassmethod
 
 import pandas as pd
 import parse
-from actymath import ActyMathError, columns
+from actymath.exceptions import ActyMathError
 
 
 class Column:

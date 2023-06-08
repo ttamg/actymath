@@ -36,6 +36,8 @@ These formulae can be explored in the [actymath/columns directory](https://githu
 
 Currently only a few old standard mortality tables are implemented, but there is support for 1D and 2D mortality tables [here](https://github.com/ttamg/actymath/blob/main/actymath/tables.py).
 
+New 1D and 2D mortality tables can be loaded in from CSV or pandas DataFrames.
+
 ## Contributing
 
 Feel free to contribute or suggest improvements.

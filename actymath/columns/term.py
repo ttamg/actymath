@@ -1,6 +1,6 @@
 import pandas as pd
 import numpy as np
-from actymath import ActyMathError
+from actymath.exceptions import ActyMathError
 
 from .base import Column
 

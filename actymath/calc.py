@@ -2,7 +2,8 @@ import numpy as np
 import pandas as pd
 
 from .indexers import SliceNIndexer, SliceToEndIndexer
-from actymath import columns, ActyMathError
+from actymath import columns
+from actymath.exceptions import ActyMathError
 
 
 # A dictionary mapping all column names to Column classes - created on the fly at import time
