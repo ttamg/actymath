@@ -6,7 +6,7 @@ from actymath.exceptions import ActyMathError
 
 
 class Column:
-    """ An abstract class for columns to populate """
+    """An abstract class for columns to populate"""
 
     default = None  # A default value to use if the value is missing
     parameters = {}  # Required kwargs parameters for populating this Column.
@@ -15,7 +15,7 @@ class Column:
 
     @classmethod
     def column(cls, **kwargs):
-        """ Returns the string Column name to create in DataFrame. """
+        """Returns the string Column name to create in DataFrame."""
         return cls.column_name.format(**kwargs)
 
     @classmethod
@@ -39,7 +39,7 @@ class Column:
 
     @classmethod
     def populate(cls, calc, force=False, **kwargs):
-        """ Populates this object and any dependencies in the Grid DataFrame. """
+        """Populates this object and any dependencies in the Grid DataFrame."""
 
         # Validate that the required parameters are provided
         for param in cls.parameters.keys():
@@ -69,6 +69,6 @@ class Column:
         new_column = cls.column(**kwargs)
         calc[new_column] = cls.calculate(calc, **kwargs)
         if cls.default is not None:
-            calc[new_column].fillna(0, inplace=True)
+            calc[new_column] = calc[new_column].fillna(0)
 
         return new_column
